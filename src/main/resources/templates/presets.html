@@ -20,7 +20,7 @@
                     <a class="nav-link" href="/vaga/listar">Listar Vagas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/usuarios">Gerenciar Usuários</a>
+                    <a class="nav-link" href="/usuarios" sec:authorize="hasRole('ADMIN')">Gerenciar Usuários</a>
                 </li>
             </ul>
         </div>

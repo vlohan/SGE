@@ -15,7 +15,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
-import javax.management.relation.Role;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -28,8 +27,10 @@ public class User implements UserDetails, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private List<Car> cars;
+
+    @NotNull
+    private String username;
 
     @NotNull
     private String password;
@@ -49,12 +50,8 @@ public class User implements UserDetails, Serializable {
         this.id = id;
     }
 
-    public List<Car> getRegistration() {
-        return cars;
-    }
-
-    public void setRegistration(List<Car> cars) {
-        this.cars = cars;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -73,6 +70,14 @@ public class User implements UserDetails, Serializable {
         this.name = name;
     }
 
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }
@@ -83,12 +88,12 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return (Collection<? extends GrantedAuthority>) this.roles;
+        return this.roles;
     }
 
     @Override
     public String getUsername() {
-        return this.name;
+        return this.username;
     }
 
     @Override
