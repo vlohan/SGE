@@ -18,13 +18,14 @@ public class Park implements Serializable {
     @NotNull
     @NotBlank
     private String id;
+
     @OneToOne
-    private Car client;
+    private User client;
 
     public Park() {
     }
 
-    public Park(String id, Car client) {
+    public Park(String id, User client) {
         this.id = id;
         this.client = client;
     }
@@ -45,11 +46,11 @@ public class Park implements Serializable {
         this.id = id;
     }
 
-    public Car getClient() {
+    public User getClient() {
         return client;
     }
 
-    public void setClient(Car client) {
+    public void setClient(User client) {
         this.client = client;
     }
 }

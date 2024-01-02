@@ -27,8 +27,6 @@ public class User implements UserDetails, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private List<Car> cars;
-
     @NotNull
     private String username;
 
@@ -68,14 +66,6 @@ public class User implements UserDetails, Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
     }
 
     public List<Role> getRoles() {
@@ -118,7 +108,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", cars=" + cars + ", password=" + password + ", name=" + name
+        return "User [id=" + id + ", password=" + password + ", name=" + name
                 + ", roles=" + roles + "]";
     }
 

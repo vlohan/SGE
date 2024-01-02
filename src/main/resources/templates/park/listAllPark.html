@@ -28,7 +28,7 @@
         <thead>
         <tr>
             <th>Nome da Vaga</th>
-            <th>Disponível</th>
+            <th>Ocupado por:</th>
             <th></th>
             <th></th>
         </tr>
@@ -36,8 +36,8 @@
         <tbody>
         <tr th:each="p : ${parks}">
             <td><span th:text="${p.id}">null</span></td>
-            <td><span th:if="${p.client}">null</span><span th:else>Sim</span></td>
-            <td><a sec:authorize="hasRole('ADMIN')" th:href="@{/vaga/{id} (id = ${p.id})}"><span class="material-symbols-outlined">edit</span></a></td>
+            <td><span th:if="${p.client}" th:text="${p.client.name}">null</span></td>
+            <td><a sec:authorize="hasAnyRole('ADMIN', 'SUPERVISOR')" th:href="@{/vaga/{id} (id = ${p.id})}"><span class="material-symbols-outlined">move</span></a></td>
             <td><span sec:authorize="hasRole('ADMIN')" class="material-symbols-outlined" style="color: red; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">delete</span></td>
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
