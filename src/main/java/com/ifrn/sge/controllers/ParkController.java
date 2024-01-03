@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -46,13 +47,13 @@ public class ParkController {
     }
 
     @GetMapping("/adicionar")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ModelAndView addPage(Park park) {
         return new ModelAndView("park/addPage.html").addObject("park", park);
     }
 
     @PostMapping("/adicionar")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ModelAndView addPark(@Valid @ModelAttribute("park") Park park, BindingResult br, RedirectAttributes ra) {
 
         if(br.hasErrors()) {
@@ -84,7 +85,7 @@ public class ParkController {
     }
 
     @GetMapping("/deletar/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERVISOR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public ModelAndView deletePark(@PathVariable String id, RedirectAttributes ra) {
         Optional<Park> opt = pr.findById(id);
 
@@ -102,6 +103,10 @@ public class ParkController {
     public ModelAndView schedulePark(@Valid @ModelAttribute("park") Park park, BindingResult br, RedirectAttributes ra) {
         if(br.hasErrors()) {
             return addPage(park);
+        }
+        if (!(Objects.equals(pr.findById(park.getId()).get().getClient().getName(), ""))) {
+            ra.addFlashAttribute("mensagem", "Vaga já ocupada!");
+            return new ModelAndView("redirect:/vaga");
         }
 
         User user = getUser();
